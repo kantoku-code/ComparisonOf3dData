@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3Dデータ比較</title>
+    <script type="text/javascript" src="/eel.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h1>3Dデータ比較</h1>
+            
+            <!-- File Drop Zones -->
+            <div class="file-section">
+                <div class="file-drop-container">
+                    <div class="drop-zone" id="dropZoneA">
+                        <div class="drop-content">
+                            <svg class="upload-icon" viewBox="0 0 24 24" width="48" height="48">
+                                <path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"/>
+                            </svg>
+                            <p>File A</p>
+                            <p class="drop-hint">ドラッグ&ドロップ</p>
+                        </div>
+                        <div class="file-info" id="fileInfoA"></div>
+                    </div>
+                    <button class="clear-btn" id="clearBtnA" style="display: none;" title="File Aを削除">×</button>
+                </div>
+                
+                <div class="file-drop-container">
+                    <div class="drop-zone" id="dropZoneB">
+                        <div class="drop-content">
+                            <svg class="upload-icon" viewBox="0 0 24 24" width="48" height="48">
+                                <path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"/>
+                            </svg>
+                            <p>File B</p>
+                            <p class="drop-hint">ドラッグ&ドロップ</p>
+                        </div>
+                        <div class="file-info" id="fileInfoB"></div>
+                    </div>
+                    <button class="clear-btn" id="clearBtnB" style="display: none;" title="File Bを削除">×</button>
+                </div>
+            </div>
+            
+            <!-- Controls -->
+            <div class="controls">
+                <h3>表示設定</h3>
+                
+                <div class="control-group">
+                    <label>
+                        <input type="checkbox" id="showFileA" checked>
+                        File A 表示
+                    </label>
+                    <label>
+                        <input type="checkbox" id="showFileB" checked>
+                        File B 表示
+                    </label>
+                </div>
+                
+                <div class="control-group">
+                    <label>透明度</label>
+                    <input type="range" id="opacity" min="30" max="100" value="70">
+                    <span id="opacityValue">70%</span>
+                </div>
+                
+                <div class="control-group">
+                    <label>
+                        <input type="checkbox" id="wireframe">
+                        ワイヤーフレーム
+                    </label>
+                </div>
+                
+                <div class="control-group">
+                    <label>
+                        <input type="checkbox" id="showMatching">
+                        一致部分を表示
+                    </label>
+                </div>
+                
+                <div class="control-group" id="matchingThresholdGroup" style="display: none;">
+                    <label>一致判定閾値 (mm)</label>
+                    <input type="range" id="matchingThreshold" min="0.01" max="5" step="0.01" value="0.1">
+                    <span id="thresholdValue">0.1</span>
+                </div>
+                
+                <div class="button-group">
+                    <button id="alignBtn" disabled>自動位置合わせ</button>
+                    <button id="resetViewBtn">ビューをリセット</button>
+                    <button id="calculateDistanceBtn" disabled>距離計算</button>
+                    <button id="findMatchingBtn" disabled>一致部分検出</button>
+                </div>
+            </div>
+            
+            <!-- Statistics -->
+            <div class="statistics" id="statistics" style="display: none;">
+                <h3>統計情報</h3>
+                <div id="statsContent"></div>
+            </div>
+            
+            <!-- Status -->
+            <div class="status" id="status"></div>
+        </div>
+        
+        <!-- 3D Viewer -->
+        <div class="viewer" id="viewer">
+            <div class="loading" id="loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>処理中...</p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>
